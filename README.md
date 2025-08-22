@@ -72,7 +72,71 @@ User authentication mechanisms are essential to ensure secure and authorized acc
 Client-server chat applications are versatile tools that facilitate real-time communication between users over a network. They incorporate various components, including server-side and client-side elements, and must consider factors such as security, scalability, and concurrency. As technology continues to advance, client-server chat applications remain integral for collaborative communication in various domains.
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
+## Program:
+## client.py:
+```
+import socket
 
+def client_program():
+    host = '127.0.0.1'
+    port = 8000  
+
+    client_socket = socket.socket()
+    client_socket.connect((host, port))
+
+    while True:
+        message = input(" -> ")
+        client_socket.send(message.encode())
+
+        data = client_socket.recv(1024).decode()
+        print('Received from server:', data)
+
+    client_socket.close()
+
+if __name__ == '__main__':
+    client_program()
+
+```
+## server.py:
+```
+import socket
+
+def server_program():
+    host = '127.0.0.1'  # or socket.gethostname()
+    port = 8000  
+
+    server_socket = socket.socket()
+    server_socket.bind((host, port))
+    server_socket.listen(1)
+    print(f"Server listening on {host}:{port}")
+
+    conn, address = server_socket.accept()
+    print("Connection from:", address)
+
+    while True:
+        data = conn.recv(1024).decode()
+        if not data:
+            break
+        print("from connected user:", data)
+        message = input(" -> ")
+        conn.send(message.encode())
+
+    conn.close()
+
+if __name__ == '__main__':
+    server_program()
+
+```
+
+## OUTPUT:
+
+## client.py:
+
+<img width="534" height="119" alt="cn 2" src="https://github.com/user-attachments/assets/123d5854-2349-4a9e-a8d8-a4762c08ad3b" />
+
+## server.py:
+
+<img width="541" height="163" alt="cn 2-1" src="https://github.com/user-attachments/assets/0912ffe0-6d7c-45a1-9a93-31f19244ca4f" />
 
 ## Result:
 
